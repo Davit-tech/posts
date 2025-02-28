@@ -1,0 +1,16 @@
+[
+  {
+    "id": "d7840cf3-a053-4751-85ce-5e65c307f910",
+    "title": "nodejs",
+    "author": "Davit",
+    "text": "lorem",
+    "createdAt": "2025-02-28"
+  },
+  {
+    "id": "93a530b3-2b95-4f35-a5d0-7743afc9a109",
+    "title": "express",
+    "author": "Davit",
+    "text": "lorem",
+    "createdAt": "2025-02-28"
+  }
+]

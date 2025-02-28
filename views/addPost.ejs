@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('./partials/head.ejs') %>
+
+<body>
+<nav>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/posts">Posts</a></li>
+        <li><a href="/addPost">New Post</a></li>
+
+    </ul>
+</nav>
+<form id="contact-form" method="POST" action="/addPost">
+    <div class="form-info">
+        <label>Post Title
+            <input type="text" name="title">
+        </label>
+        <label>Author
+            <input type="text" name="author">
+        </label>
+    </div>
+    <div class="form-text">
+        <label>Post Text
+            <textarea name="text"></textarea>
+        </label>
+    </div>
+    <div class="form-button">
+        <input type="submit" value="Submit">
+    </div>
+</form>
+
+</body>
+</html>
