@@ -12,17 +12,16 @@
 </nav>
 <article>
     <div class="info">
-        <span><%= new Date(post.createdAt).toLocaleDateString() %></span>
+
         <span>Author :<%= post.author %></span>
     </div>
-    <h1>Title :<%= post.title %></h1>
+    <h1 class="post-title">Title :<%= post.title %></h1>
     <p>Description :<%= post.text %></p>
+    <p>Post Date :<%= post.date %></p>
     <a href="/posts/<%= post.id %>/edit" class="btn-edit">
         <i class="fas fa-edit"></i>
     </a>
-    <button class="btn-delete" data-id="<%= post.id %>">
-        <i class="fas fa-trash-alt" data-id="<%= post.id %>"></i>
-    </button>
+
 </article>
 
 

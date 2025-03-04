@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <%- include('./partials/head.ejs') %>
 <body>
 <nav>
@@ -8,33 +7,48 @@
         <li><a href="/">Home</a></li>
         <li><a href="/posts">Posts</a></li>
         <li><a href="/addPost">New Post</a></li>
-
     </ul>
 </nav>
-<h1>Posts:</h1>
 
+<h1>Posts:</h1>
 
 <ul>
     <% if (posts.length) { %>
-        <% posts.forEach(({id, title, createdAt, text, author}) => { %>
+        <% posts.forEach(({id, title, createdAt, text, author, date}) => { %>
             <li>
                 <article>
                     <h2>
-                        <a href="/posts/<%= id %>"><%= title %></a>
+                        <a href="/posts/<%= id %>">Post Title :  <%= title %></a>
                     </h2>
-                    <p><%= text %></p>
+                    <p>Post Description  : <%= text %></p>
                     <div class="info">
-
-                        <span><%= author %></span>
+                        <span>Post Author  : <%= author %></span>
                     </div>
+                    <span>Post Date : <%= date %></span>
                     <button class="btn-delete" data-id="<%= id %>">
                         <i class="fas fa-trash-alt" data-id="<%= id %>"></i>
                     </button>
                 </article>
             </li>
         <% }) %>
+    <% } else { %>
+        <p>No posts available.</p>
     <% } %>
 </ul>
+
+
+<div class="pagination">
+    <% if (page > 1) { %>
+        <a href="/posts?page=<%= page - 1 %>limit=<%= limit %>">Previous</a>
+    <% } %>
+
+    <span>Page <%= page %> of <%= totalPages %></span>
+
+    <% if (page < totalPages) { %>
+        <a href="/posts?page=<%= page + 1 %>limit=<%= limit %>">Next</a>
+    <% } %>
+</div>
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const deleteButtons = document.querySelectorAll('.btn-delete');
@@ -48,7 +62,6 @@
                     })
                         .then(response => {
                             if (response.status === 204) {
-
                                 location.reload();
                             } else {
                                 alert("Error deleting post.");

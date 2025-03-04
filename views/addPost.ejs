@@ -9,9 +9,9 @@
         <li><a href="/">Home</a></li>
         <li><a href="/posts">Posts</a></li>
         <li><a href="/addPost">New Post</a></li>
-
     </ul>
 </nav>
+
 <form id="contact-form" method="POST" action="/addPost">
     <div class="form-info">
         <label>Post Title
@@ -26,10 +26,37 @@
             <textarea name="text"></textarea>
         </label>
     </div>
+    <div>
+        <label>
+            <input type="date" name="date" id="post-date" value="">
+        </label>
+    </div>
     <div class="form-button">
         <input type="submit" value="Submit">
     </div>
 </form>
+
+<script>
+    const contactForm =document.getElementById("contact-form")
+        if(contactForm){
+        contactForm.addEventListener("submit", function(event) {
+                const postDate = document.getElementById("post-date").value;
+                const currentDate = new Date().toISOString().split('T')[0];
+
+                if (postDate < currentDate) {
+                    alert('The post date cannot be in the past.');
+                    event.preventDefault();
+                    return;
+                }
+                if (postDate > currentDate) {
+                    alert('The post date cannot be in the future.');
+                    event.preventDefault();
+
+                }
+            });
+        }
+
+</script>
 
 </body>
 </html>

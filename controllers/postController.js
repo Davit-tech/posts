@@ -7,6 +7,9 @@ const postFile = "./post.json";
 export default {
     getPosts: async (req, res) => {
         const title = "Posts";
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 5;
+
         let posts;
 
         try {
@@ -17,9 +20,24 @@ export default {
             posts = [];
         }
 
-        posts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-        res.render("posts", {posts, title});
-    },
+
+        const startIndex = (page - 1) * limit;
+        const endIndex = startIndex + limit;
+
+        const paginatedPosts = posts.slice(startIndex, endIndex);
+
+        const totalPages = Math.ceil(posts.length / limit);
+
+
+        res.render("posts", {
+            posts: paginatedPosts,
+            title,
+            page,
+            totalPages,
+            limit
+        });
+    }
+    ,
 
     getPost: async (req, res) => {
         const {id} = req.params;
@@ -50,7 +68,7 @@ export default {
     },
 
     addPost: async (req, res) => {
-        const {title, author, text} = req.body;
+        const {title, author, text, date} = req.body;
         console.log('Form data:', req.body);
 
         let posts = [];
@@ -62,8 +80,7 @@ export default {
         }
 
 
-        const createdAt = new Date().toISOString().split('T')[0];
-        const todaysPostsCount = getTodaysPostsCount(posts, createdAt);
+        const todaysPostsCount = getTodaysPostsCount(posts);
         if (todaysPostsCount >= 5) {
             res.status(400).send("You cannot create more than 5 posts in a day.");
             return;
@@ -79,7 +96,7 @@ export default {
 
 
         const userId = uuidv4();
-        const newPost = {id: userId, title, author, text, createdAt};
+        const newPost = {id: userId, title, author, text, date};
 
         posts.push(newPost);
 
